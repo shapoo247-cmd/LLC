@@ -51,3 +51,10 @@ Alternate three layouts: `full` (presenter full frame), `fs` (full-screen animat
 - Fire the sound when the visual change lands (its peak), never before it and never for something that fails.
 - Sources: Kenney "Interface Sounds" (CC0, `hf/edit30/sfx2/`, normalised to -8 dB peak). `sound-effects` skill can generate sounds via ElevenLabs but needs `ELEVENLABS_API_KEY` and the owner's approval before spending credits.
 - Sound never carries meaning alone; the picture must make sense muted.
+
+## Delivery checks (earshot installed at scratchpad `earshot_src/repo`; `python -m earshot timeline VIDEO --cues "t1,t2,..."`)
+- Run earshot `timeline` with the visual-landing times as `--cues`. v4 result: median sound-to-cue offset 23 ms, 100% within 100 ms.
+- Normalise the final audio to about -16 LUFS, true peak <= -1.5 dBTP (`loudnorm=I=-16:TP=-1.5:LRA=7`). The raw mix was -29.6 LUFS, far too quiet.
+- Deliver a 60 fps master (`render --fps 60`) and a 30 fps copy made with `tmix=frames=2` + `select='not(mod(n,2))'` for the 30 fps spec.
+- All graphics are CENTRED: full-screen on x=960, side-by-side zone on x=565, both on y=540. Pills over the presenter are dark, high-contrast and sit mid-height in the free left lane (x 40-700), never in the same colour as the footage.
+- Easing (from the motion-design skill): ease-out-quint/quart for enters, ease-in-out for on-screen moves, no bounce/overshoot on enters, scale from about .95 (never ~0), blur at most 10px.
