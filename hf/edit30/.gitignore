@@ -1,0 +1,5 @@
+.hyperframes/
+.agents/
+.claude/
+node_modules/
+skills-lock.json
