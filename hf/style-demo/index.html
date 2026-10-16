@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1920, height=1080">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<style>
+@font-face{font-family:"Inter Display";font-weight:500;src:url("./fonts/InterDisplay-Medium.otf")}
+@font-face{font-family:"Inter Display";font-weight:600;src:url("./fonts/InterDisplay-SemiBold.otf")}
+@font-face{font-family:"Inter Display";font-weight:700;src:url("./fonts/InterDisplay-Bold.otf")}
+:root{--g:#86868b;--w:#f5f5f7}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1920px;height:1080px;overflow:hidden;background:#000}
+#root{position:relative;width:100%;height:100%;background:#000;font-family:"Inter Display",sans-serif;color:var(--w);overflow:hidden}
+.orb{position:absolute;width:1300px;height:1300px;border-radius:50%;opacity:0}
+.oa{background:radial-gradient(circle,rgba(10,132,255,.55),rgba(10,132,255,0) 65%)}
+.ob{background:radial-gradient(circle,rgba(191,90,242,.45),rgba(191,90,242,0) 65%)}
+.oc{background:radial-gradient(circle,rgba(255,159,10,.5),rgba(255,159,10,0) 65%)}
+.od{background:radial-gradient(circle,rgba(255,55,95,.4),rgba(255,55,95,0) 65%)}
+.oe{background:radial-gradient(circle,rgba(48,209,88,.45),rgba(48,209,88,0) 65%)}
+.of{background:radial-gradient(circle,rgba(100,210,255,.4),rgba(100,210,255,0) 65%)}
+.scene{position:absolute;inset:0}
+.stack{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.t{font-weight:600;letter-spacing:-.035em;line-height:1.02;white-space:nowrap}
+.eyebrow{font-weight:500;font-size:46px;letter-spacing:-.01em;color:var(--g)}
+.hero{font-weight:700;letter-spacing:-.065em;line-height:.82;font-variant-numeric:tabular-nums}
+.grn{background:linear-gradient(180deg,#8dffb0 0%,#30d158 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:#30d158}
+.org{background:linear-gradient(180deg,#ffd60a 0%,#ff453a 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:#ff9f0a}
+.wht{background:linear-gradient(180deg,#ffffff 0%,#8e8e93 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:#d1d1d6}
+.glass{background:rgba(255,255,255,.07);backdrop-filter:blur(50px) saturate(180%);-webkit-backdrop-filter:blur(50px) saturate(180%);border:1px solid rgba(255,255,255,.12);border-top-color:rgba(255,255,255,.28);box-shadow:0 50px 140px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.15)}
+#pill{margin-top:56px;display:flex;align-items:center;gap:18px;padding:22px 40px 22px 26px;border-radius:60px;font-weight:600;font-size:44px;letter-spacing:-.02em}
+#pill svg{width:46px;height:46px}
+#card{position:absolute;left:470px;top:462px;width:980px;height:540px;border-radius:64px;padding:38px 58px}
+.row{display:flex;justify-content:space-between;align-items:center;height:78px;font-weight:500;font-size:42px;letter-spacing:-.02em;border-bottom:1px solid rgba(255,255,255,.1)}
+.row span:first-child{color:#c7c7cc}
+.row b{font-weight:600;font-variant-numeric:tabular-nums}
+.row .ok{color:#30d158}.row .bad{color:#ff9f0a}
+#tot{display:flex;justify-content:space-between;align-items:center;margin-top:18px}
+#totl{font-weight:500;font-size:38px;color:var(--g);letter-spacing:-.01em}
+#totn{font-weight:700;font-size:190px;letter-spacing:-.06em;line-height:1;font-variant-numeric:tabular-nums}
+#sw{position:relative;width:560px;height:320px;border-radius:160px;background:#ff9f0a;box-shadow:0 0 0 1px rgba(255,255,255,.1) inset,0 40px 120px rgba(255,159,10,.35);margin-top:36px}
+#kn{position:absolute;left:256px;top:16px;width:288px;height:288px;border-radius:50%;background:linear-gradient(180deg,#fff,#e5e5ea);box-shadow:0 18px 40px rgba(0,0,0,.35),0 2px 6px rgba(0,0,0,.25)}
+#lab{margin-top:44px;font-weight:500;font-size:44px;color:var(--g);letter-spacing:-.01em}
+#save{margin-top:26px;font-weight:700;font-size:120px;letter-spacing:-.05em;font-variant-numeric:tabular-nums;line-height:1}
+#vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 50%,transparent 60%,rgba(0,0,0,.55) 100%)}
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="14" data-width="1920" data-height="1080">
+  <audio id="sfx" src="audio.wav" data-start="0" data-duration="14" data-track-index="9" data-volume="0.85"></audio>
+  <div class="orb oa" id="o1" style="left:-300px;top:-380px"></div><div class="orb ob" id="o2" style="left:900px;top:300px"></div>
+  <div class="orb oc" id="o3" style="left:-200px;top:-300px"></div><div class="orb od" id="o4" style="left:1000px;top:250px"></div>
+  <div class="orb oe" id="o5" style="left:-250px;top:200px"></div><div class="orb of" id="o6" style="left:950px;top:-350px"></div>
+
+  <section class="scene clip" id="s1" data-start="0" data-duration="4" data-track-index="1">
+    <div class="stack" id="k1">
+      <div class="eyebrow" id="e1">Tailor Brands advertises a</div>
+      <div class="hero grn" id="h1" style="font-size:620px;margin-top:34px">$0</div>
+      <div class="t" id="l1" style="font-size:84px;margin-top:6px">LLC formation.</div>
+      <div id="pill" class="glass"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="#30d158"/><path d="M13 25l8 8 15-17" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>Technically true.</div>
+    </div>
+  </section>
+
+  <section class="scene clip" id="s2" data-start="4" data-duration="5" data-track-index="1">
+    <div class="stack" id="k2" style="justify-content:flex-start;padding-top:96px">
+      <div class="t" id="a2" style="font-size:78px;color:var(--g)">By checkout, it’s closer to</div>
+      <div class="t org" id="b2" style="font-size:132px;margin-top:6px">$200 a year.</div>
+    </div>
+    <div id="card" class="glass">
+      <div class="row" id="r1"><span>LLC formation</span><b class="ok">$0</b></div>
+      <div class="row" id="r2"><span>Add-ons bundle</span><b class="bad">$149</b></div>
+      <div class="row" id="r3"><span>Annual renewal</span><b class="bad">$67</b></div>
+      <div id="tot"><span id="totl">Total per year</span><span id="totn" class="wht">$0</span></div>
+    </div>
+  </section>
+
+  <section class="scene clip" id="s3" data-start="9" data-duration="5" data-track-index="1">
+    <div class="stack" id="k3" style="justify-content:flex-start;padding-top:96px">
+      <div class="t" id="a3" style="font-size:78px;color:var(--g)">The one setting</div>
+      <div class="t wht" id="b3" style="font-size:132px;margin-top:6px">to switch off.</div>
+      <div id="sw"><div id="kn"></div></div>
+      <div id="lab">Add-ons auto-renewal</div>
+      <div id="save" class="grn">Saves $149 / year</div>
+    </div>
+  </section>
+  <div id="vig"></div>
+</div>
+<script>
+const tl=gsap.timeline({paused:true});
+const IN={opacity:1,y:0,scale:1,filter:"blur(0px)",duration:1,ease:"expo.out"};
+const mat=(sel,t)=>tl.fromTo(sel,{opacity:0,y:36,scale:.94,filter:"blur(22px)"},{...IN},t);
+const out=(sel,t)=>tl.to(sel,{opacity:0,scale:1.06,filter:"blur(24px)",duration:.45,ease:"power2.in"},t);
+
+// ambient orbs: each scene gets its own pair, drifting slowly
+[["#o1","#o2",0,4],["#o3","#o4",4,5],["#o5","#o6",9,5]].forEach(([a,b,t0,d])=>{
+  tl.fromTo([a,b],{opacity:0},{opacity:1,duration:.8,ease:"power2.out"},t0===0?0:t0-.2);
+  tl.to([a,b],{opacity:0,duration:.5},t0+d-.4);
+  tl.fromTo(a,{x:0,y:0},{x:160,y:90,duration:d+1,ease:"sine.inOut"},t0);
+  tl.fromTo(b,{x:0,y:0},{x:-140,y:-70,duration:d+1,ease:"sine.inOut"},t0);
+});
+
+/* S1: $0 */
+mat("#e1",.15); mat("#h1",.3); mat("#l1",.75);
+tl.fromTo("#pill",{opacity:0,y:30,scale:.9,filter:"blur(14px)"},{opacity:1,y:0,scale:1,filter:"blur(0px)",duration:.8,ease:"back.out(1.5)"},2.1);
+tl.fromTo("#k1",{scale:1},{scale:1.035,duration:3.6,ease:"none"},.2);
+out("#k1",3.5);
+
+/* S2: checkout */
+mat("#a2",4.15); mat("#b2",4.45);
+tl.fromTo("#card",{opacity:0,y:140,scale:.96,filter:"blur(18px)"},{opacity:1,y:0,scale:1,filter:"blur(0px)",duration:1.1,ease:"expo.out"},4.6);
+[["#r1",5.1],["#r2",5.5],["#r3",5.9]].forEach(([r,t])=>tl.fromTo(r,{opacity:0,y:16},{opacity:1,y:0,duration:.5,ease:"expo.out"},t));
+const o={v:0};
+tl.fromTo(o,{v:0},{v:216,duration:1.4,ease:"power3.out",onUpdate(){document.getElementById("totn").textContent="$"+Math.round(o.v);}},6.3);
+tl.fromTo("#totn",{scale:1},{scale:1.05,duration:.25,ease:"power2.out",yoyo:true,repeat:1,transformOrigin:"right center"},7.5);
+out("#k2",8.5); out("#card",8.5);
+
+/* S3: toggle */
+mat("#a3",9.15); mat("#b3",9.4);
+tl.fromTo("#sw",{opacity:0,y:60,scale:.9,filter:"blur(16px)"},{opacity:1,y:0,scale:1,filter:"blur(0px)",duration:1,ease:"expo.out"},9.7);
+mat("#lab",10.1);
+tl.to("#kn",{x:-240,duration:.55,ease:"back.out(1.3)"},11.1);
+tl.to("#sw",{backgroundColor:"#39393d",boxShadow:"0 0 0 1px rgba(255,255,255,.1) inset,0 40px 120px rgba(0,0,0,.5)",duration:.4,ease:"power2.out"},11.1);
+tl.fromTo("#save",{opacity:0,y:30,scale:.92,filter:"blur(14px)"},{opacity:1,y:0,scale:1,filter:"blur(0px)",duration:.9,ease:"expo.out"},11.5);
+tl.fromTo("#k3",{scale:1},{scale:1.03,duration:4.6,ease:"none"},9.2);
+
+window.__timelines["main"]=tl;
+tl.seek(0);
+</script>
+</body>
+</html>
