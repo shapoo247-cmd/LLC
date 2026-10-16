@@ -82,5 +82,5 @@ Role map from earshot readings: message-sent swish = panel transition in (revers
 
 ### Colour grade: baked with ffmpeg, not the realtime shader
 - The `data-color-grading` shader path rendered at ~15 s/frame on this software-GL machine (56 of 1707 frames in 14 min) and made `hyperframes check` time out. Do NOT use it for the full render here.
-- The approved Natural Portrait look is reproduced in `gen.py` as `GRADE` (applied after the cut concat): gentle S-curve with shadow detail and highlight roll-off, tiny warm mids / cool shadows via `colorbalance`, `vibrance` .08, mild forward `vignette` (`mode=forward` darkens edges; `backward` brightens them, do not use). Verified against the media-treatment result on face close-ups.
+- The approved Natural Portrait look is reproduced in `gen.py` as `GRADE` (applied after the cut concat): gentle S-curve with shadow detail and highlight roll-off, tiny warm mids / cool shadows via `colorbalance`, `vibrance` .08; NO ffmpeg vignette (it stacked with the `#vig` overlay and darkened the edges too much). Verified against the media-treatment result on face close-ups.
 - Always compare original / graded / reference crops before rendering; first two tries were too orange then too milky.
