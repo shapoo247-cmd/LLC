@@ -105,3 +105,7 @@ Role map from earshot readings: message-sent swish = panel transition in (revers
 
 ## Render gotcha: corrupt frame cache after killing a render
 - Killing a HyperFrames render mid-run leaves a partial video-frame cache in `/tmp/hyperframes-extract-cache-*`. The next render reports `extract 0.0s` and silently shows BLACK where the presenter video should be (only the first ~1 s was fine). After any killed/aborted render run `rm -rf /tmp/hyperframes-extract-cache-*` before rendering again, and ALWAYS look at frames from the final file (presenter visible in full AND split layouts) before mixing/sending.
+
+## Root cause of the "presenter vanishes after 1 s" bug (v10-v13)
+- `#world` (the push-zoom wrapper) had no CSS because a later CSS-block replacement in `template.tpl` (`t[a:b]` from "/* L9 ..." to the first "#vig{") silently deleted the `#world/#leak/.lk*/#lkflash` rules. A transformed element becomes the containing block for absolute children, so a zero-size `#world` collapsed `#vframe` (inset:0) to nothing the moment the first push-zoom fired.
+- Rules: (1) never slice template CSS by index across blocks without asserting every neighbouring rule still exists afterwards (`assert "#world{" in t`); (2) after any template change take a `snapshot --at` with the presenter in full AND split layouts (e.g. 1.5, 5.5, 7.0, 14.0, 16.0) BEFORE rendering; (3) verify frames of the final render, then mix audio.

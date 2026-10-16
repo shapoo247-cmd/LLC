@@ -91,6 +91,13 @@ html,body{width:1920px;height:1080px;overflow:hidden;background:#000}
 .ci svg{width:33px;height:33px}.ci svg,.fi svg{fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 .fr{display:flex;align-items:center;gap:18px;height:54px;padding:0 22px;border-radius:18px;font-weight:500;font-size:30px;letter-spacing:-.012em;color:#ececf1}
 .fi svg{width:29px;height:29px;color:#a1a1a6;display:block}
+#world{position:absolute;inset:0;transform-origin:50% 50%}
+#leak{position:absolute;inset:-16%;opacity:0;overflow:hidden;pointer-events:none;mix-blend-mode:screen}
+.lk{position:absolute;inset:-20%;will-change:opacity,transform}
+.lk-a{background:radial-gradient(ellipse 52% 110% at 10% 58%,rgb(255 241 197/92%),transparent 45%),radial-gradient(ellipse 72% 120% at 24% 54%,rgb(255 126 57/78%),transparent 66%);filter:blur(2.8vmin)}
+.lk-r{background:radial-gradient(ellipse 58% 105% at 78% 34%,rgb(255 79 61/72%),rgb(255 44 92/28%) 48%,transparent 76%);filter:blur(4vmin)}
+.lk-g{background:linear-gradient(104deg,transparent 24%,rgb(255 144 62/30%) 40%,rgb(255 247 205/72%) 51%,rgb(255 124 48/22%) 62%,transparent 78%);filter:blur(2vmin)}
+#lkflash{position:absolute;inset:0;background:#fff3d6;opacity:0;pointer-events:none;mix-blend-mode:screen}
 #vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 50%,transparent 62%,rgba(0,0,0,.35) 100%)}
 </style>
 </head>
