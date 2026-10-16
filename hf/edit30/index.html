@@ -68,7 +68,9 @@ html,body{width:1920px;height:1080px;overflow:hidden;background:#000}
 .chip{font-size:42px}
 .chip .n{font-weight:700;font-size:76px;letter-spacing:-.05em;line-height:1;background:linear-gradient(180deg,#9be7ff,#0a84ff);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:#64d2ff;min-width:54px;text-align:center}
 /* L6 chart */
-#panel{position:relative;width:900px;height:400px;border-radius:52px;margin-top:40px}
+#panel{position:relative;width:1040px;height:440px;border-radius:52px;margin-top:36px;overflow:hidden}
+#ch{position:absolute;left:0;top:0}
+#lbl6{position:absolute;left:0;top:0;font-weight:700;font-size:72px;letter-spacing:-.04em;font-variant-numeric:tabular-nums;color:#30d158;opacity:0;white-space:nowrap}
 #bars{position:absolute;left:70px;right:70px;bottom:54px;height:290px;display:flex;align-items:flex-end;justify-content:space-between}
 .bar{width:90px;border-radius:22px 22px 10px 10px;transform-origin:bottom}
 #tag200{position:absolute;left:70px;top:34px;font-weight:700;font-size:54px;letter-spacing:-.04em;padding-right:.05em}
@@ -130,7 +132,17 @@ html,body{width:1920px;height:1080px;overflow:hidden;background:#000}
     <div id="lane5" class="lane"><div id="c5a" class="chip pillD"><span class="n">2</span>LLCs formed</div><div id="c5b" class="chip pillD" style="padding-left:30px">Clicked through it myself</div></div></section>
 
   <section class="scene clip" id="L6" data-start="18.4" data-duration="2.050" data-track-index="2"><div class="lz fs">
-    <div id="h6"></div><div id="panel" class="glass"><div id="bars"></div><div id="tag0">$0</div><div id="tag200" class="org">$200 / yr</div></div></div></section>
+    <div id="h6"></div>
+    <div id="panel" class="glass"><svg id="ch" viewBox="0 0 1040 440" width="1040" height="440">
+      <defs><linearGradient id="lg" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#30d158"/><stop offset=".55" stop-color="#ffb340"/><stop offset="1" stop-color="#ff453a"/></linearGradient>
+        <linearGradient id="ag" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff9f0a" stop-opacity=".38"/><stop offset="1" stop-color="#ff9f0a" stop-opacity="0"/></linearGradient>
+        <clipPath id="cp"><rect id="cpr" x="0" y="0" width="0" height="440"/></clipPath></defs>
+      <g stroke="rgba(255,255,255,.10)" stroke-width="2"><line x1="120" x2="1000" y1="90" y2="90"/><line x1="120" x2="1000" y1="180" y2="180"/><line x1="120" x2="1000" y1="270" y2="270"/><line x1="120" x2="1000" y1="360" y2="360"/></g>
+      <g fill="#8e8e93" font-size="26" font-family="Inter Display" text-anchor="end"><text x="96" y="98">$200</text><text x="96" y="188">$150</text><text x="96" y="278">$100</text><text x="96" y="368">$50</text></g>
+      <path id="area" clip-path="url(#cp)" fill="url(#ag)" d="M110 372 C 230 368, 300 340, 380 322 S 520 300, 600 250 S 760 190, 830 150 S 940 96, 990 70 L990 400 L110 400 Z"/>
+      <path id="ln" fill="none" stroke="url(#lg)" stroke-width="10" stroke-linecap="round" d="M110 372 C 230 368, 300 340, 380 322 S 520 300, 600 250 S 760 190, 830 150 S 940 96, 990 70"/>
+      <circle id="dot" r="14" fill="#fff" opacity="0"/>
+    </svg><div id="lbl6">$0</div></div></div></section>
 
   <section class="scene clip" id="L7" data-start="20.49" data-duration="3.160" data-track-index="2"><div class="lz">
     <div id="h7"></div><div id="sw"><div id="kn"></div></div><div id="lab">Add-ons auto-renewal</div></div></section>
@@ -203,8 +215,8 @@ C.modes.forEach(([m,t0],i)=>{if(m!=="full")return;const e=C.modes[i+1]?C.modes[i
 C.segs.forEach(([a],i)=>{if(!i)return;
   if(modeAt(a)==="full")tl.set("#vz",{scale:segBase(a)},a);});
 /* shockwave ring on the big hits */
-const ring=(x,y,col,t)=>{const r=document.createElement("div");r.className="ring";r.style.left=(x-300)+"px";r.style.top=(y-300)+"px";r.style.borderColor=col;document.getElementById("root").appendChild(r);
-  tl.fromTo(r,{scale:.25,opacity:.9},{scale:2.2,opacity:0,duration:1.0,ease:"power3.out",immediateRender:false},t);};
+const ring=(x,y,col,t,s=2.2)=>{const r=document.createElement("div");r.className="ring";r.style.left=(x-300)+"px";r.style.top=(y-300)+"px";r.style.borderColor=col;document.getElementById("root").appendChild(r);
+  tl.fromTo(r,{scale:.25,opacity:.9},{scale:s,opacity:0,duration:1.0,ease:"power3.out",immediateRender:false},t);};
 
 /* ambient glow per beat (left zone only; behind the card) */
 const orbSets={L1:[1,1,0,0,0,0],L2:[0,0,0,0,1,1],L3:[0,0,0,0,1,1],L4:[0,0,1,1,0,0],L6:[0,0,1,1,0,0],L7:[0,0,0,0,1,1],L8:[1,1,0,0,0,0],L9:[1,1,0,0,0,0]};
@@ -253,16 +265,24 @@ Object.keys(orbSets).forEach(id=>{const a=W[id][0];orbSets[id].forEach((v,i)=>tl
  pop("#c5a",k.a-LEAD,{x:-30});pop("#c5b",k.b-LEAD,{x:-30});
  tl.fromTo("#c5a .n",{scale:1},{scale:1.2,duration:.18,yoyo:true,repeat:1,ease:"power2.out",immediateRender:false},k.a);
  tl.to("#c5a",{opacity:0,duration:.25,ease:"power3.out"},b-.3).to("#c5b",{opacity:0,duration:.25,ease:"power3.out"},b-.3);}
-/* ---------- L6: price climbs ---------- */
+/* ---------- L6: price climbs (line draws on, accelerating; live counter rides the dot) ---------- */
 {const[a,b]=W.L6,k=Kn.l6;
  const h=mk("#h6",[{size:62,cls:"dim",w:[["Where",k.w[0]],["the",k.w[1]],["price",k.w[2]]]},{size:128,cls:"org",w:[["climbs.",k.w[3]]]}],a);
- pop("#panel",a+.12,{y:80,scale:.95});
- const bars=document.getElementById("bars");const hs=[18,36,66,102,144,190,236];
- hs.forEach((v,i)=>{const d=document.createElement("div");d.className="bar";d.style.height=v+"px";const t=i/6;
-   d.style.background=`linear-gradient(180deg,${t<.5?"#ffd60a":"#ff9f0a"},${t<.4?"#30d158":t<.75?"#ff9f0a":"#ff453a"})`;bars.appendChild(d);
-   tl.fromTo(d,{scaleY:0,opacity:0},{scaleY:1,opacity:1,duration:.5,ease:"power4.out"},k.bars+i*.085);});
- tl.fromTo("#tag0",{opacity:0},{opacity:1,duration:.3,immediateRender:false},k.bars);
- pop("#tag200",k.tag-LEAD,{scale:.9,y:10});
+ pop("#panel",a+.12,{y:70,scale:.95});
+ const ln=document.getElementById("ln"),len=ln.getTotalLength(),dot=document.getElementById("dot"),cpr=document.getElementById("cpr"),lb=document.getElementById("lbl6");
+ ln.style.strokeDasharray=len;ln.style.strokeDashoffset=len;
+ const mix=(c1,c2,u)=>c1.map((v,i)=>Math.round(v+(c2[i]-v)*u));
+ const G=[48,209,88],A=[255,179,64],R=[255,69,58];
+ const o={p:0};
+ const upd=()=>{const p=o.p,pt=ln.getPointAtLength(len*p);
+   ln.style.strokeDashoffset=len*(1-p);dot.setAttribute("cx",pt.x);dot.setAttribute("cy",pt.y);dot.style.opacity=p>0?1:0;cpr.setAttribute("width",pt.x);
+   lb.style.opacity=p>0?1:0;lb.style.left="0px";lb.style.top=Math.max(8,pt.y-96)+"px";
+   lb.textContent="$"+Math.round(200*p)+(p>.985?" / yr":"");lb.style.left=Math.min(Math.max(120,pt.x-250),1000-lb.offsetWidth)+"px";
+   const col=p<.5?mix(G,A,p/.5):mix(A,R,(p-.5)/.5);lb.style.color="rgb("+col.join(",")+")";};
+ tl.fromTo(o,{p:0},{p:1,duration:k.tag-(k.bars-.6),ease:"power2.in",onUpdate:upd,immediateRender:false},k.bars-.6);
+ tl.fromTo("#dot",{scale:1},{scale:1.9,duration:.22,yoyo:true,repeat:1,ease:"power2.out",transformOrigin:"center",immediateRender:false},k.tag-.05);
+ ring(1430,520,"#ff453a",k.tag,1.15);
+ tl.fromTo("#lbl6",{scale:1},{scale:1.12,duration:.2,yoyo:true,repeat:1,ease:"power2.out",transformOrigin:"left center",immediateRender:false},k.tag);
  outEls(h,b-.3);outBlock("#panel",b-.3);}
 /* ---------- L7: toggle ---------- */
 {const[a,b]=W.L7,k=Kn.l7;

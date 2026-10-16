@@ -65,19 +65,16 @@ CAPS=[{"t0":c[0][1],"t1":c[-1][2],"w":[[x[0],x[1],kw.get(re.sub(r"[^\w$]","",x[0
 segs=[[round(c0,3),round(c0+(b-a),3)] for (a,b),c0 in zip(iv,cum)]
 k=kin
 modes=[["full",0,""],["fs",win["L1"][0],"major"],["split",win["L2"][0],"minor"],["full",round(win["L2"][1]-.05,3),"major"],["fs",win["L4"][0],"major"],["split",round(kin["l4"]["swap"]-.2,3),"minor"],["full",round(win["L4"][1]-.05,3),"major"],["fs",win["L6"][0],"major"],["split",win["L7"][0],"minor"],["fs",win["L9"][0],"minor"]]
-# owner's RH sounds: SWOOSH3 + CAMERA4 on every cut (peaks aligned to the cut instant T), RISER builds into the big reveals
+# professional, not SFX-heavy: swoosh on the five major cuts only, camera click on just two of them, ONE riser (into the opening $0 reveal)
 cues=[]
 for m,T,kind in modes[1:]:
-    big=kind=="major"
-    cues+=[("swoosh3",T-.30,.8 if big else .55),("camera4",T-.05,1.0 if big else .6)]
-# build-ups: riser climax ends on the hit (first 0.35 s of the riser is near-silent, so a negative start is harmless)
-def riser(end,vol): return ("riser",end-1.58,vol)
-cues+=[riser(k["l1"]["hero"]-.24,.7),riser(k["l4"]["land"],.75),riser(k["l6"]["tag"],.5)]
-# impacts and resolution (synth): boom under the hits, relief chord when the problem is solved
+    if kind=="major": cues.append(("swoosh3",T-.30,.6))
+cues+=[("camera4",modes[1][1]-.05,1.0),("camera4",modes[4][1]-.05,.8)]
+cues+=[("riser",kin["l1"]["hero"]-.24-1.58,.7)]
+# impacts and resolution
 cues+=[("deep",k["l1"]["hero"],1.0),("boom",k["l1"]["hero"],.6),("impact",k["l4"]["land"],.95),("boom",k["l4"]["land"],.9),("relief",k["l7"]["flip"]+.3,.4)]
-# Apple UI sounds (owner's folder), one per completed gesture
-cues+=[("click",k["l2"]["click"],.85),("applepay",k["l3"]["true"]-.02,.55),("pop",k["ch"]["a"],.6),("pop",k["l6"]["tag"],.5),
- ("click",k["l7"]["flip"]+.15,.8),("ding",k["l7"]["flip"]+.5,.55),("deep",k["l9"]["never"],.55)]
+# one Apple UI sound per key gesture
+cues+=[("click",k["l2"]["click"],.85),("applepay",k["l3"]["true"]-.02,.55),("click",k["l7"]["flip"]+.15,.8),("ding",k["l7"]["flip"]+.5,.55)]
 ins=[];flt="";lab=""
 for i,(nm,t,v) in enumerate(cues):
     ins+=["-i",f"{SFX}/{nm}.wav"];ms=int(max(0,t)*1000);flt+=f"[{i}:a]volume={v},adelay={ms}|{ms}[c{i}];";lab+=f"[c{i}]"

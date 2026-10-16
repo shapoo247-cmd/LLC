@@ -91,3 +91,8 @@ Role map from earshot readings: message-sent swish = panel transition in (revers
 - Align every sample by its measured PEAK, not its file start: earshot sound-to-cue sync went from median 54 ms to 26 ms after doing this.
 - Loudness: single-pass loudnorm landed at -18.4 LUFS; two-pass (measure, then `linear=true`) gives -16.7 LUFS.
 - Video-only edits need no re-render: keep the picture master (`first30_apple_edit_v8_60fps.mp4`) and remux new audio onto it.
+
+## Round 6 corrections (owner): sound restraint + better 0:19 hook
+- "Professional, not SFX heavy." RH-RISER: exactly ONE, at the start (into the opening $0 reveal). RH-CAMERA4: only twice (the opening cut and the cut into the checkout), never on every transition. RH-SWOOSH3: major cuts only (5), none on minor cuts. Removed: chip/tag pops, "never" thump, extra risers. Target about 17 cues in 28 s, each tied to a key gesture.
+- 0:19 price scene (L6) rebuilt: a line chart draws on with an accelerating climb, a dot leads it, a counter rides the dot from $0 to $200 (green -> amber -> red), area fill follows, one small ring at the top. Replaces the plain bars + "$200 / yr" tag. Keep the end label inside the panel (measure `offsetWidth`).
+- `hf/edit30/mixdown.sh <picture master> <out prefix>` does the audio remux + two-pass loudnorm + 30 fps copy.
