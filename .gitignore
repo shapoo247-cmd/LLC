@@ -1,0 +1,11 @@
+# Rebuilt by setup.sh from parts/
+footage/raw_footage_1.mp4
+reference/sample_llc_1.mp4
+
+ref_frames/
+raw_frames/
+tmp/
+*.tmp
+node_modules/
+__pycache__/
+.DS_Store
