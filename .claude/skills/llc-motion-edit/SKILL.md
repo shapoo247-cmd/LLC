@@ -64,3 +64,10 @@ Alternate three layouts: `full` (presenter full frame), `fs` (full-screen animat
 - The owner's "Apple UI" sound-effect folder is the preferred SFX source. As of this round it was NOT in the repo, uploads or Drive; ask for it to be pushed to the branch. Map sounds by ROLE (in/out, tap, click, tink, toggle, confirm) in `gen.py` so the folder can be dropped in.
 - The edit must carry emotion and suspense, not just clean UI: build tension (dark, slow push-in, low swell), a beat of silence, then an impact on the big reveals ($0, $216), a shockwave ring on each hit, and a relief chord when the problem is solved (switch off). Pacing and sound carry the feeling.
 - Rings/overlays that start invisible must use `immediateRender:false` with CSS opacity 0, or they show as outlines before they fire.
+
+## Apple UI sound folder (`Apple ui/` on `main`, copied into the branch)
+Role map from earshot readings: message-sent swish = panel transition in (reversed = out); ui-click-deep = deep hit on "$0" and "never"; ui-click-43196 = button click; ui-pop = chip/tag pops; battle-pop (first 0.8 s) = impact on "$216"; apple-pay chime = "Technically true" check; universfield ding = problem solved (switch off). Skipped: crickets "mid-nights", phone typing, bubble-pop. Processed copies are in `hf/edit30/sfx3/` (peak -8 dB). Synthetic suspense layer (swell/boom/relief) sits under them.
+- Slow-attack sounds (apple-pay 88 ms, message-sent 92 ms) measured about 54 ms median off the visual peak in earshot; if it matters, start those cues 50 ms earlier.
+- Remux audio without re-rendering: render video once, then `ffmpeg -i video -i aroll.mp4 -i sfx.wav -filter_complex "[1:a]volume=1[v];[2:a]volume=.6[s];[v][s]amix=inputs=2:normalize=0,loudnorm=I=-16:TP=-1.5:LRA=7" -c:v copy`.
+## Shell gotcha
+- Never write a wait loop like `until ... ! pgrep -f "<pattern>"` where the pattern also appears in the loop's own command line: it matches itself and never ends. Poll for the output file only, or check `ps` once.
