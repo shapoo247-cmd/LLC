@@ -32,7 +32,9 @@ if os.environ.get("CUT","1")=="1":
         fc.append(f"[0:v]trim=start={a:.3f}:end={b:.3f},setpts=PTS-STARTPTS,fps=30[v{i}]")
         fc.append(f"[0:a]atrim=start={a:.3f}:end={b:.3f},asetpts=PTS-STARTPTS,afade=t=in:d=0.015,afade=t=out:st={L-0.015:.3f}:d=0.015[a{i}]")
         ins+=f"[v{i}][a{i}]"
-    fc.append(f"{ins}concat=n={len(iv)}:v=1:a=1[v][a]")
+    GRADE="curves=master='0/0.012 0.15/0.14 0.30/0.285 0.45/0.425 0.55/0.575 0.70/0.725 0.85/0.84 0.95/0.925 1/0.97',colorbalance=bs=0.01:rm=0.012:bm=-0.012:rh=0.008:bh=-0.008,vibrance=intensity=0.08,eq=saturation=1.0,vignette=a=PI/3.2:mode=forward"
+    fc.append(f"{ins}concat=n={len(iv)}:v=1:a=1[v0][a]")
+    fc.append(f"[v0]{GRADE}[v]")
     os.makedirs(P+"/assets",exist_ok=True)
     subprocess.run(["ffmpeg","-v","error","-y","-i","/home/user/LLC/footage/raw_footage_1.mp4","-filter_complex",";".join(fc),"-map","[v]","-map","[a]","-c:v","libx264","-crf","17","-preset","medium","-g","30","-pix_fmt","yuv420p","-c:a","aac","-b:a","192k","-ar","48000",P+"/assets/aroll.mp4"],check=True)
 wd={"L1":(13.25,14.62),"L2":(14.7,17.95),"L3":(18.05,19.95),"L4":(22.85,29.85),"CH":(44.2,47.25),

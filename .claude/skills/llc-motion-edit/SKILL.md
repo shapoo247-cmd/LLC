@@ -79,3 +79,8 @@ Role map from earshot readings: message-sent swish = panel transition in (revers
 ## Colour grade (owner request: professional studio grade on the presenter)
 - Done through HyperFrames media-treatment (skill `media-use`, recipe "Natural Portrait"), NOT hand-rolled filters. Source measured clean (mid exposure, no clipping, low saturation) so it is a polish grade. Payload on `<video id="av">` (`data-color-grading`, stored in `template.tpl` so `gen.py` keeps it): preset skin-soft, intensity .72, exposure +.08, contrast +.08, highlights -.18, shadows +.12, whites -.08, blacks -.04, temperature +.04, tint +.015, vibrance +.06, saturation +.04, vignette .05 (all inside the recipe's safe ranges).
 - Workflow: before sheet -> `hyperframes media-treatment --selector '#av' --grading '<json>' --apply --json` -> after sheet + face close-up check -> copy the attribute into the template (re-applying via CLI after every `gen.py` run is the failure mode that lost it once).
+
+### Colour grade: baked with ffmpeg, not the realtime shader
+- The `data-color-grading` shader path rendered at ~15 s/frame on this software-GL machine (56 of 1707 frames in 14 min) and made `hyperframes check` time out. Do NOT use it for the full render here.
+- The approved Natural Portrait look is reproduced in `gen.py` as `GRADE` (applied after the cut concat): gentle S-curve with shadow detail and highlight roll-off, tiny warm mids / cool shadows via `colorbalance`, `vibrance` .08, mild forward `vignette` (`mode=forward` darkens edges; `backward` brightens them, do not use). Verified against the media-treatment result on face close-ups.
+- Always compare original / graded / reference crops before rendering; first two tries were too orange then too milky.
