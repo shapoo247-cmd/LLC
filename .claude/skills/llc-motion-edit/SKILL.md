@@ -84,3 +84,10 @@ Role map from earshot readings: message-sent swish = panel transition in (revers
 - The `data-color-grading` shader path rendered at ~15 s/frame on this software-GL machine (56 of 1707 frames in 14 min) and made `hyperframes check` time out. Do NOT use it for the full render here.
 - The approved Natural Portrait look is reproduced in `gen.py` as `GRADE` (applied after the cut concat): gentle S-curve with shadow detail and highlight roll-off, tiny warm mids / cool shadows via `colorbalance`, `vibrance` .08; NO ffmpeg vignette (it stacked with the `#vig` overlay and darkened the edges too much). Verified against the media-treatment result on face close-ups.
 - Always compare original / graded / reference crops before rendering; first two tries were too orange then too milky.
+
+## Owner's RH sounds (round 5), now the primary transition / build-up sounds (`hf/edit30/sfx_owner/`, processed copies in `sfx3/`)
+- Do NOT use the iPhone "message sent" swish (rejected). Every cut: RH-SWOOSH3 (peak at 0.30 s into the file, so start it at T-0.30) + RH-CAMERA4 (shutter click, peak at 0.05 s, start at T-0.05). Major cuts louder (.8 / 1.0), minor (.55 / .6).
+- Build-ups: RH-RISER (1.6 s, climax at its very end) ends exactly on the hit: starts at hit-1.58. Used before "$0", before the "$216" landing and under the price chart. A slightly negative start time is harmless (the first 0.35 s is near-silent).
+- Align every sample by its measured PEAK, not its file start: earshot sound-to-cue sync went from median 54 ms to 26 ms after doing this.
+- Loudness: single-pass loudnorm landed at -18.4 LUFS; two-pass (measure, then `linear=true`) gives -16.7 LUFS.
+- Video-only edits need no re-render: keep the picture master (`first30_apple_edit_v8_60fps.mp4`) and remux new audio onto it.

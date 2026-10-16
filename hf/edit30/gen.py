@@ -65,15 +65,16 @@ CAPS=[{"t0":c[0][1],"t1":c[-1][2],"w":[[x[0],x[1],kw.get(re.sub(r"[^\w$]","",x[0
 segs=[[round(c0,3),round(c0+(b-a),3)] for (a,b),c0 in zip(iv,cum)]
 k=kin
 modes=[["full",0,""],["fs",win["L1"][0],"major"],["split",win["L2"][0],"minor"],["full",round(win["L2"][1]-.05,3),"major"],["fs",win["L4"][0],"major"],["split",round(kin["l4"]["swap"]-.2,3),"minor"],["full",round(win["L4"][1]-.05,3),"major"],["fs",win["L6"][0],"major"],["split",win["L7"][0],"minor"],["fs",win["L9"][0],"minor"]]
-# light-leak cut: reverse swish builds into the cut, soft hit on it, airy tail after
+# owner's RH sounds: SWOOSH3 + CAMERA4 on every cut (peaks aligned to the cut instant T), RISER builds into the big reveals
 cues=[]
 for m,T,kind in modes[1:]:
     big=kind=="major"
-    cues+=[("swish_out",T-.46,.55 if big else .4),("swish_in",T-.02,.5 if big else .35)]
-    if big: cues.append(("boom",T,.35))
-# suspense layer (synth): swell -> a beat of silence -> impact; relief chord when the problem is solved
-cues+=[("swell",k["l1"]["hero"]-1.45,.45),("deep",k["l1"]["hero"],1.0),("boom",k["l1"]["hero"],.6),
- ("swell",k["l4"]["land"]-1.9,.5),("impact",k["l4"]["land"],.95),("boom",k["l4"]["land"],.9),("relief",k["l7"]["flip"]+.3,.4)]
+    cues+=[("swoosh3",T-.30,.8 if big else .55),("camera4",T-.05,1.0 if big else .6)]
+# build-ups: riser climax ends on the hit (first 0.35 s of the riser is near-silent, so a negative start is harmless)
+def riser(end,vol): return ("riser",end-1.58,vol)
+cues+=[riser(k["l1"]["hero"]-.24,.7),riser(k["l4"]["land"],.75),riser(k["l6"]["tag"],.5)]
+# impacts and resolution (synth): boom under the hits, relief chord when the problem is solved
+cues+=[("deep",k["l1"]["hero"],1.0),("boom",k["l1"]["hero"],.6),("impact",k["l4"]["land"],.95),("boom",k["l4"]["land"],.9),("relief",k["l7"]["flip"]+.3,.4)]
 # Apple UI sounds (owner's folder), one per completed gesture
 cues+=[("click",k["l2"]["click"],.85),("applepay",k["l3"]["true"]-.02,.55),("pop",k["ch"]["a"],.6),("pop",k["l6"]["tag"],.5),
  ("click",k["l7"]["flip"]+.15,.8),("ding",k["l7"]["flip"]+.5,.55),("deep",k["l9"]["never"],.55)]
