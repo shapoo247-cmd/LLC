@@ -71,3 +71,7 @@ Role map from earshot readings: message-sent swish = panel transition in (revers
 - Remux audio without re-rendering: render video once, then `ffmpeg -i video -i aroll.mp4 -i sfx.wav -filter_complex "[1:a]volume=1[v];[2:a]volume=.6[s];[v][s]amix=inputs=2:normalize=0,loudnorm=I=-16:TP=-1.5:LRA=7" -c:v copy`.
 ## Shell gotcha
 - Never write a wait loop like `until ... ! pgrep -f "<pattern>"` where the pattern also appears in the loop's own command line: it matches itself and never ends. Poll for the output file only, or check `ps` once.
+
+## Round 4 correction (owner): presenter <-> animation transitions
+- Shrink/dock/fade layout morphs were rejected as unprofessional. Cut between layouts instantly UNDER a light leak (layered amber/red/gold screen-blended glow, style of registry block `organic-light-leak-overlay`; installed in `hf/edit30/compositions/`, timing re-implemented inline in `template.tpl` because the block peaks ~1 s in), with a push-zoom through the cut, a reverse swish building into the cut, a soft hit on it, and an airy tail after. Major leak (peak .82) for any cut that brings the presenter in or out of full frame; minor (.55) for split <-> full-screen animation. Alternate the sweep direction.
+- Cut times in `gen.py` `modes` are the cut instants (first graphic appears there), not transition starts.
