@@ -34,3 +34,10 @@
 - Images pasted into chat are not on disk. Files from the owner come via `main` (repo) or `/root/.claude/uploads/<session>/`. Check `git fetch origin && git ls-tree -r origin/main --name-only`.
 - Stop hook: the repo must be clean at the end of every turn. Commit + push; delete throwaway files (old renders) rather than leaving them untracked.
 - When the owner reports "I see X", first ask which of the plausible things they mean if unclear (black backdrop by design vs missing footage vs viewer showing transparent PNGs as black).
+
+## Portrait 1080x1920 edits (WhatsApp one-offer video, hf/oneoffer)
+- Template: `hf/oneoffer/template.tpl`. Presenter card sits at the TOP (clip `inset(90px 60px 990px 60px round 48px)`, vclip y=90, card-mode `#vz` scale .9 so chin/mouth stay inside); split graphics zone is the lower half (`.lz` left 40 top 960 w1000 h880); fs uses the full 1080x1920 box; pills in full mode go over the shirt (top ~1250).
+- `.ln` mask lines clip descenders ("money." rendered "monev."): padding-bottom .22em and margin-bottom -.1em.
+- Low-res phone source (464x832) is upscaled 2.3x in gen.py GRADE (lanczos + unsharp); tell the user it is soft.
+- `mixdown.sh <picture> <out prefix> <duration>` takes the duration as 3rd arg (hf/oneoffer/mixdown.sh); intermediate wavs use /tmp/oo_ prefix.
+- 61 s portrait render at 60 fps took ~11 min (software GL).
