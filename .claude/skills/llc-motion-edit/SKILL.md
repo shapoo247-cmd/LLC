@@ -31,3 +31,6 @@ Read the references in this order, then work:
 4. Send both files (`SendUserFile`), state verified/unverified honestly, list anything open.
 5. Commit and push to `claude/nifty-fermi-w9ften` (no PR unless asked). A stop hook demands a clean tree: commit everything or delete scratch files. Keep only the latest renders plus the newest picture master.
 6. Append any new owner correction to `references/owner-feedback.md` BEFORE doing the next thing.
+
+## Related
+The general, reusable version of this system is the skill `safdars-apple-style-motion-graphics` (same style, code snippets in `references/engine.md`). Keep both in sync when you learn something new: update `references/style-corrections.md` there as well as `owner-feedback.md` here.
