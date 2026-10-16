@@ -24,9 +24,11 @@ html,body{width:1920px;height:1080px;overflow:hidden;background:#000}
 #vframe{position:absolute;inset:0;clip-path:inset(0px 0px 0px 0px round 0px)}
 #vclip{position:absolute;inset:0}
 #vz{position:absolute;inset:0;transform-origin:58% 0%}
+#vp{position:absolute;inset:0;transform-origin:58% 0%}
 #av{position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:cover}
 #shade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.25) 0%,rgba(0,0,0,0) 20%,rgba(0,0,0,0) 62%,rgba(0,0,0,.6) 100%)}
 .scene{position:absolute;inset:0}
+.ring{position:absolute;width:600px;height:600px;border-radius:50%;border:4px solid #fff;opacity:0;pointer-events:none}
 .lz{position:absolute;left:60px;top:90px;width:1010px;height:900px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
 .lz.fs{left:0;width:1920px}
 .ln{display:block;overflow:hidden;padding:4px 12px 12px 12px;text-align:center;white-space:nowrap;line-height:1.04;letter-spacing:-.035em;font-weight:600}
@@ -95,7 +97,7 @@ html,body{width:1920px;height:1080px;overflow:hidden;background:#000}
   <audio id="sfx" src="assets/sfx.wav" data-start="0" data-duration="@@D@@" data-track-index="9" data-volume="0.6"></audio>
   <div id="sbg"><div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div><div class="orb o4"></div><div class="orb o5"></div><div class="orb o6"></div></div>
   <div id="cring"></div>
-  <div id="vframe"><div id="vclip"><div id="vz"><video id="av" class="clip" src="assets/aroll.mp4" playsinline data-has-audio="true" data-start="0" data-duration="@@D@@" data-track-index="0" data-volume="1"></video></div></div></div>
+  <div id="vframe"><div id="vclip"><div id="vz"><div id="vp"><video id="av" class="clip" src="assets/aroll.mp4" playsinline data-has-audio="true" data-start="0" data-duration="@@D@@" data-track-index="0" data-volume="1"></video></div></div></div></div>
 
   <section class="scene clip" id="L1" data-start="@@L1a@@" data-duration="@@L1d@@" data-track-index="2"><div class="lz fs">
     <div id="l1e"></div><div id="l1h" class="hero" style="font-size:470px;margin-top:6px"><span class="hc grn">$</span><span class="hc grn">0</span></div><div id="l1l"></div></div></section>
@@ -158,8 +160,8 @@ const pop=(sel,t,from={})=>tl.fromTo(sel,{scale:.95,y:26,opacity:0,...from},{sca
 const outBlock=(sel,t)=>tl.to(sel,{opacity:0,y:-30,scale:.97,duration:.28,ease:"power3.in"},t);
 
 /* three layouts: full-frame presenter ("full"), full-screen animation ("fs"), both at once ("split") */
-const CARD="inset(90px 70px 90px 1130px round 48px)",FULL="inset(0px 0px 0px 0px round 0px)";
-const ST={full:{clip:FULL,x:0,y:0,vo:1,bg:0,ring:0,sh:1},split:{clip:CARD,x:330,y:90,vo:1,bg:1,ring:1,sh:0},fs:{clip:CARD,x:330,y:90,vo:0,bg:1,ring:0,sh:0}};
+const CARD="inset(90px 70px 90px 1130px round 48px)",FULL="inset(0px 0px 0px 0px round 0px)",DOCK="inset(90px 70px 90px 1850px round 48px)";
+const ST={full:{clip:FULL,x:0,y:0,vo:1,bg:0,ring:0,sh:1},split:{clip:CARD,x:330,y:90,vo:1,bg:1,ring:1,sh:0},fs:{clip:DOCK,x:330,y:90,vo:1,bg:1,ring:0,sh:0}};
 const modeAt=t=>{let m="full";C.modes.forEach(([mm,tt])=>{if(t>=tt-1e-6)m=mm;});return m;};
 const segBase=t=>{let i=0;C.segs.forEach(([a],k)=>{if(t>=a-1e-3)i=k;});return i%2?1.12:1;};
 const vzS=(m,t)=>m==="full"?segBase(t):1;
@@ -172,6 +174,14 @@ C.modes.forEach(([m,t],i)=>{if(!i)return;const p=C.modes[i-1][0],a=ST[p],b=ST[m]
   tl.fromTo("#sbg",{opacity:a.bg},{opacity:b.bg,duration:.45,ease:"power2.inOut",immediateRender:false},t);
   tl.fromTo("#cring",{opacity:a.ring},{opacity:b.ring,duration:.45,immediateRender:false},t+.1);
   tl.fromTo("#shade",{opacity:a.sh},{opacity:b.sh,duration:.45,immediateRender:false},t);});
+/* slow push-in while the presenter is full frame; eases back to 1 as she docks into the card */
+const PUSH=.05;
+C.modes.forEach(([m,t0],i)=>{if(m!=="full")return;const e=C.modes[i+1]?C.modes[i+1][0]:C.D;
+  tl.fromTo("#vp",{scale:1},{scale:1+PUSH,duration:Math.max(.1,e-t0),ease:"none",immediateRender:false},t0);
+  if(C.modes[i+1])tl.fromTo("#vp",{scale:1+PUSH},{scale:1,duration:.8,ease:SPM,immediateRender:false},e);});
+/* shockwave ring on the big hits */
+const ring=(x,y,col,t)=>{const r=document.createElement("div");r.className="ring";r.style.left=(x-300)+"px";r.style.top=(y-300)+"px";r.style.borderColor=col;document.getElementById("root").appendChild(r);
+  tl.fromTo(r,{scale:.25,opacity:.9},{scale:2.2,opacity:0,duration:1.0,ease:"power3.out",immediateRender:false},t);};
 /* alternate punch-in on each cut while the presenter is full frame (hard switch hides the jump cut) */
 C.segs.forEach(([a],i)=>{if(!i)return;const near=C.modes.some(([m,tt],j)=>j&&tt<=a&&a<tt+.85);
   if(!near&&modeAt(a)==="full")tl.set("#vz",{scale:segBase(a)},a);});
@@ -183,10 +193,10 @@ Object.keys(orbSets).forEach(id=>{const a=W[id][0];orbSets[id].forEach((v,i)=>tl
 
 /* ---------- L1: $0 ---------- */
 {const[a,b]=W.L1,k=Kn.l1;
- const e=mk("#l1e",[{size:44,cls:"dim",w:[["Tailor",k.e[0]],["Brands",k.e[1]],["advertises",k.e[2]],["a",k.e[3]]]}],a+.3);
+ const e=[];ring(960,540,"#30d158",k.hero);
  const hs=document.querySelectorAll("#l1h .hc");
- tl.fromTo(hs[0],{scale:1.12,y:40,opacity:0,filter:"blur(10px)"},{scale:1,y:0,opacity:1,filter:"blur(0px)",duration:.5,ease:SP},k.hero-LEAD);
- tl.fromTo(hs[1],{scale:1.12,y:40,opacity:0,filter:"blur(10px)"},{scale:1,y:0,opacity:1,filter:"blur(0px)",duration:.5,ease:SP},k.hero-LEAD+.07);
+ tl.fromTo(hs[0],{scale:1.18,y:30,opacity:0,filter:"blur(10px)"},{scale:1,y:0,opacity:1,filter:"blur(0px)",duration:.5,ease:SP},k.hero-LEAD);
+ tl.fromTo(hs[1],{scale:1.18,y:30,opacity:0,filter:"blur(10px)"},{scale:1,y:0,opacity:1,filter:"blur(0px)",duration:.5,ease:SP},k.hero-LEAD+.07);
  const l=mk("#l1l",[{size:80,cls:"",w:[["LLC",k.llc],["formation.",k.llc+.08]]}],a);
  outEls([...e,...l],b-.3);tl.to("#l1h",{opacity:0,scale:.94,y:-20,duration:.28,ease:"power3.in"},b-.3);}
 /* ---------- L2: free formation / sign up ---------- */
@@ -212,9 +222,10 @@ Object.keys(orbSets).forEach(id=>{const a=W[id][0];orbSets[id].forEach((v,i)=>tl
  pop("#card",a+.1,{y:90,scale:.95});
  [["#r1",k.rows[0]],["#r2",k.rows[1]],["#r3",k.rows[2]]].forEach(([r,t])=>tl.fromTo(r,{opacity:0,y:18},{opacity:1,y:0,duration:.45,ease:SP},t-LEAD));
  const o={v:0};tl.fromTo(o,{v:0},{v:216,duration:k.land-k.count,ease:"power3.out",onUpdate(){document.getElementById("totn").textContent="$"+Math.round(o.v);}},k.count);
+ ring(960,730,"#ff9f0a",k.land);
  tl.fromTo("#totn",{scale:1},{scale:1.07,duration:.16,yoyo:true,repeat:1,ease:"power2.out",transformOrigin:"right center",immediateRender:false},k.land-.04);
  tl.fromTo("#lz4",{x:0},{x:-395,duration:.8,ease:SPM},k.swap-.2);
- outEls(h1,k.swap-.12);
+ outEls(h1,k.swap-.45);
  const h2=mk("#h4b",[{size:58,cls:"dim",w:[["and",k.n1[0]],["they",k.n1[1]],["have",k.n1[2]]]},{size:118,cls:"wht",w:[["no",k.n2[0]],["idea",k.n2[1]],["how.",k.n2[2]]]}],a);
  outEls(h2,b-.3);outBlock("#card",b-.3);}
 /* ---------- chips: dark pills, vertically centred in the free left lane ---------- */
@@ -237,6 +248,7 @@ Object.keys(orbSets).forEach(id=>{const a=W[id][0];orbSets[id].forEach((v,i)=>tl
 {const[a,b]=W.L7,k=Kn.l7;
  const h=mk("#h7",[{size:62,cls:"dim",w:[["The",k.t[0]],["one",k.t[1]],["setting",k.t[2]]]},{size:128,cls:"wht",w:[["to",k.t[3]],["switch",k.t[4]],["off.",k.t[5]]]}],a);
  pop("#sw",a+.15,{y:60,scale:.88});pop("#lab",a+.3,{y:20});
+ ring(565,560,"#30d158",k.flip+.25);
  tl.to("#kn",{x:-184,duration:.5,ease:"power4.out"},k.flip);
  tl.to("#sw",{backgroundColor:"#39393d",boxShadow:"0 0 0 1px rgba(255,255,255,.1) inset,0 36px 100px rgba(0,0,0,.5)",duration:.35,ease:"power2.out"},k.flip);
  outEls(h,b-.3);outBlock("#sw",b-.3);outBlock("#lab",b-.3);}

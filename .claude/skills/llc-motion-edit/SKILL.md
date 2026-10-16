@@ -58,3 +58,9 @@ Alternate three layouts: `full` (presenter full frame), `fs` (full-screen animat
 - Deliver a 60 fps master (`render --fps 60`) and a 30 fps copy made with `tmix=frames=2` + `select='not(mod(n,2))'` for the 30 fps spec.
 - All graphics are CENTRED: full-screen on x=960, side-by-side zone on x=565, both on y=540. Pills over the presenter are dark, high-contrast and sit mid-height in the free left lane (x 40-700), never in the same colour as the footage.
 - Easing (from the motion-design skill): ease-out-quint/quart for enters, ease-in-out for on-screen moves, no bounce/overshoot on enters, scale from about .95 (never ~0), blur at most 10px.
+
+## Round 3 corrections (owner)
+- NEVER flash the presenter for a few frames and then fade her out. Open on her for a real beat (>= 1 s) with a slow push-in. Never fade her while she is talking; layout changes move her (shrink into the card, dock into the right edge via `DOCK` clip), they do not fade her. Hold the presenter full-frame or in the card for >= 1.5 s at a time.
+- The owner's "Apple UI" sound-effect folder is the preferred SFX source. As of this round it was NOT in the repo, uploads or Drive; ask for it to be pushed to the branch. Map sounds by ROLE (in/out, tap, click, tink, toggle, confirm) in `gen.py` so the folder can be dropped in.
+- The edit must carry emotion and suspense, not just clean UI: build tension (dark, slow push-in, low swell), a beat of silence, then an impact on the big reveals ($0, $216), a shockwave ring on each hit, and a relief chord when the problem is solved (switch off). Pacing and sound carry the feeling.
+- Rings/overlays that start invisible must use `immediateRender:false` with CSS opacity 0, or they show as outlines before they fire.

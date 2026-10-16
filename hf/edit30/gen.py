@@ -35,7 +35,7 @@ if os.environ.get("CUT","1")=="1":
     fc.append(f"{ins}concat=n={len(iv)}:v=1:a=1[v][a]")
     os.makedirs(P+"/assets",exist_ok=True)
     subprocess.run(["ffmpeg","-v","error","-y","-i","/home/user/LLC/footage/raw_footage_1.mp4","-filter_complex",";".join(fc),"-map","[v]","-map","[a]","-c:v","libx264","-crf","17","-preset","medium","-g","30","-pix_fmt","yuv420p","-c:a","aac","-b:a","192k","-ar","48000",P+"/assets/aroll.mp4"],check=True)
-wd={"L1":(12.15,14.62),"L2":(14.7,17.95),"L3":(18.05,19.95),"L4":(22.85,29.85),"CH":(44.2,47.25),
+wd={"L1":(13.25,14.62),"L2":(14.7,17.95),"L3":(18.05,19.95),"L4":(22.85,29.85),"CH":(44.2,47.25),
     "L6":(48.25,50.3),"L7":(50.34,53.5),"L8":(53.55,55.9),"L9":(55.9,58.45)}
 win={k:[round(mp(a),3),round(mp(b),3)] for k,(a,b) in wd.items()}
 mode={"s1":[round(mp(12.1),3),round(mp(29.85),3)],"s2":[round(mp(48.2),3)]}
@@ -62,11 +62,13 @@ if cur: caps.append(cur)
 CAPS=[{"t0":c[0][1],"t1":c[-1][2],"w":[[x[0],x[1],kw.get(re.sub(r"[^\w$]","",x[0].lower()),"")] for x in c]} for c in caps]
 segs=[[round(c0,3),round(c0+(b-a),3)] for (a,b),c0 in zip(iv,cum)]
 k=kin
-modes=[["full",0],["fs",round(win["L1"][0]-.1,3)],["split",round(win["L2"][0]-.05,3)],["full",round(win["L2"][1]-.05,3)],["fs",round(win["L4"][0]-.1,3)],["split",round(kin["l4"]["swap"]-.2,3)],["full",round(win["L4"][1]-.05,3)],["fs",round(win["L6"][0]-.1,3)],["split",round(win["L7"][0]-.05,3)],["fs",round(win["L9"][0]-.05,3)]]
-cues=[("in" if m!="full" else "out",t+.05,.6) for m,t in modes[1:]]
-# minimal palette: one sound per completed gesture, no tick spam
-cues+=[("tap",k["l1"]["hero"],.7),("click",k["l2"]["click"],.8),("confirm",k["l3"]["true"]-.02,.45),
- ("tink",k["l4"]["land"],.65),("tink2",k["ch"]["a"],.5),("tink",k["l6"]["tag"],.45),("toggle",k["l7"]["flip"]+.15,.85),("tap",k["l9"]["never"],.5)]
+modes=[["full",0],["fs",round(win["L1"][0]-.45,3)],["split",round(win["L2"][0]-.05,3)],["full",round(win["L2"][1]-.05,3)],["fs",round(win["L4"][0]-.1,3)],["split",round(kin["l4"]["swap"]-.2,3)],["full",round(win["L4"][1]-.05,3)],["fs",round(win["L6"][0]-.1,3)],["split",round(win["L7"][0]-.05,3)],["fs",round(win["L9"][0]-.05,3)]]
+cues=[("in" if m!="full" else "out",t+.05,.55) for m,t in modes[1:]]
+# suspense layer: swell -> a beat of silence -> impact on the big hits; relief chord when the switch goes off
+cues+=[("swell",k["l1"]["hero"]-1.45,.5),("boom",k["l1"]["hero"],.8),
+ ("swell",k["l4"]["land"]-1.9,.55),("boom",k["l4"]["land"],1.0),("relief",k["l7"]["flip"]+.3,.45)]
+# UI palette: one sound per completed gesture
+cues+=[("click",k["l2"]["click"],.8),("confirm",k["l3"]["true"]-.02,.4),("tink2",k["ch"]["a"],.5),("tink",k["l6"]["tag"],.45),("toggle",k["l7"]["flip"]+.15,.85),("tap",k["l9"]["never"],.5)]
 ins=[];flt="";lab=""
 for i,(nm,t,v) in enumerate(cues):
     ins+=["-i",f"{SFX}/{nm}.wav"];ms=int(max(0,t)*1000);flt+=f"[{i}:a]volume={v},adelay={ms}|{ms}[c{i}];";lab+=f"[c{i}]"
