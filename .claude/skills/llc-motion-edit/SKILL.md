@@ -35,3 +35,19 @@ Owner feedback is recorded here so the same mistakes are not repeated. Add every
 - Never tween `fontSize`/`width` (lint `gsap_non_transform_motion`); use `scale` + `x`.
 - Do not keep a template `.html` next to `index.html` (two roots). Template is `template.tpl`; `gen.py` writes `index.html`.
 - After `gen.py`, run `npx hyperframes@0.8.164 check`; fix lint `content_overlap`, `text_occluded` and contrast before rendering.
+
+## Motion principles (from the installed `apple-design` HIG skill: `.agents/skills/apple-design/references/hig/motion.md`)
+- Motion is purposeful and supports the story; no decorative or peripheral motion. Background glows stay static and only crossfade between beats (continuous drift removed).
+- Feedback animations are brief and precise, tied to the exact event they explain.
+- Keep realistic, reversible directions: what enters from the right leaves to the right; the A-roll card grows back the way it shrank.
+- Smoothness: motion looks steppy at 30 fps; render the master at 60 fps (`render --fps 60`) and derive a 30 fps motion-blurred copy (ffmpeg `tmix` + `select`) for the 30 fps spec in CLAUDE.md.
+- Presenter framing: keep her head fully in frame (top of head touches the source frame edge, so the card must start at source y=0), and zoom with `transform-origin: 58% 0%`.
+
+## Mode mix (owner request)
+Alternate three layouts: `full` (presenter full frame), `fs` (full-screen animation, presenter hidden, voice continues), `split` (presenter card on the right, graphic on the left). No bottom captions.
+
+## Sound rules (installed skills: `design/game-feel/sound-design.md`, `sound-effects`)
+- Small palette (about 4-6 sounds: soft transition, tap, click, tink, toggle, confirm). One sound per completed gesture. No tick spam per row/bar/tile; routine = quiet, rare = bigger.
+- Fire the sound when the visual change lands (its peak), never before it and never for something that fails.
+- Sources: Kenney "Interface Sounds" (CC0, `hf/edit30/sfx2/`, normalised to -8 dB peak). `sound-effects` skill can generate sounds via ElevenLabs but needs `ELEVENLABS_API_KEY` and the owner's approval before spending credits.
+- Sound never carries meaning alone; the picture must make sense muted.

@@ -1,5 +1,5 @@
 import json,subprocess,re,os
-P="/home/user/LLC/hf/edit30"; SFX=P+"/sfx"
+P="/home/user/LLC/hf/edit30"; SFX=P+"/sfx2"
 words=json.load(open("/home/user/LLC/plan/words_raw.json"))
 W=[[s,e,t] for s,e,t in words if 11.7<=s and e<=58.3]
 W=[w for w in W if not (41.3<=w[0]<43.7)]
@@ -62,19 +62,16 @@ if cur: caps.append(cur)
 CAPS=[{"t0":c[0][1],"t1":c[-1][2],"w":[[x[0],x[1],kw.get(re.sub(r"[^\w$]","",x[0].lower()),"")] for x in c]} for c in caps]
 segs=[[round(c0,3),round(c0+(b-a),3)] for (a,b),c0 in zip(iv,cum)]
 k=kin
-cues=[("swish",mode["s1"][0]-.05,.8),("tap",k["l1"]["hero"],.9),("tink",k["l2"]["free"],.6),("tink",k["l2"]["btn"]-.05,.45),("click",k["l2"]["click"],1.0),("confirm",k["l3"]["true"]-.02,.55)]
-cues+=[("ticks",t,.6) for t in k["l4"]["rows"]]
-n=k["l4"]["count"];
-while n<k["l4"]["land"]-.1: cues.append(("ticks",n,.3));n+=.17
-cues+=[("tink",k["l4"]["land"],.8),("tink",k["ch"]["a"],.7),("tink",k["ch"]["b"],.55),("swish",mode["s2"][0]-.05,.8)]
-cues+=[("ticks",k["l6"]["bars"]+i*.085,.5) for i in range(7)]
-cues+=[("tink",k["l6"]["tag"],.6),("click",k["l7"]["flip"]+.2,1.0),("tink",k["l7"]["flip"]+.42,.5),("tink",k["l8"]["w"][2],.55)]
-cues+=[("ticks",k["l9"]["tiles"]+i*.22,.45) for i in range(4)]+[("tap",k["l9"]["never"],.7)]
+modes=[["full",0],["fs",round(win["L1"][0]-.1,3)],["split",round(win["L2"][0]-.05,3)],["full",round(win["L2"][1]-.05,3)],["fs",round(win["L4"][0]-.1,3)],["split",round(kin["l4"]["swap"]-.2,3)],["full",round(win["L4"][1]-.05,3)],["fs",round(win["L6"][0]-.1,3)],["split",round(win["L7"][0]-.05,3)],["fs",round(win["L9"][0]-.05,3)]]
+cues=[("in" if m!="full" else "out",t+.05,.6) for m,t in modes[1:]]
+# minimal palette: one sound per completed gesture, no tick spam
+cues+=[("tap",k["l1"]["hero"],.7),("click",k["l2"]["click"],.8),("confirm",k["l3"]["true"]-.02,.45),
+ ("tink",k["l4"]["land"],.65),("tink2",k["ch"]["a"],.5),("tink",k["l6"]["tag"],.45),("toggle",k["l7"]["flip"]+.15,.85),("tap",k["l9"]["never"],.5)]
 ins=[];flt="";lab=""
 for i,(nm,t,v) in enumerate(cues):
     ins+=["-i",f"{SFX}/{nm}.wav"];ms=int(max(0,t)*1000);flt+=f"[{i}:a]volume={v},adelay={ms}|{ms}[c{i}];";lab+=f"[c{i}]"
 subprocess.run(["ffmpeg","-v","error","-y",*ins,"-filter_complex",flt+lab+f"amix=inputs={len(cues)}:normalize=0,alimiter=limit=0.9,atrim=0:{D:.2f}","-ar","48000",P+"/assets/sfx.wav"],check=True)
-cfg={"D":round(D,3),"win":win,"kin":kin,"mode":mode,"caps":CAPS,"segs":segs}
+cfg={"D":round(D,3),"win":win,"kin":kin,"modes":modes,"segs":segs}
 html=open(P+"/template.tpl").read().replace("@@CFG@@",json.dumps(cfg)).replace("@@D@@",f"{D:.3f}")
 for g,(a,b) in win.items():
     html=html.replace(f"@@{g}a@@",str(a)).replace(f"@@{g}d@@",f"{b-a:.3f}")

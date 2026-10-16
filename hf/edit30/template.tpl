@@ -23,7 +23,7 @@ html,body{width:1920px;height:1080px;overflow:hidden;background:#000}
 #cring{position:absolute;left:1130px;top:90px;width:720px;height:900px;border-radius:48px;box-shadow:0 50px 140px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.12);opacity:0}
 #vframe{position:absolute;inset:0;clip-path:inset(0px 0px 0px 0px round 0px)}
 #vclip{position:absolute;inset:0}
-#vz{position:absolute;inset:0;transform-origin:58% 38%}
+#vz{position:absolute;inset:0;transform-origin:58% 0%}
 #av{position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:cover}
 #shade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.25) 0%,rgba(0,0,0,0) 20%,rgba(0,0,0,0) 62%,rgba(0,0,0,.6) 100%)}
 .scene{position:absolute;inset:0}
@@ -79,10 +79,6 @@ html,body{width:1920px;height:1080px;overflow:hidden;background:#000}
 .tile{height:128px;border-radius:30px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}
 .tile svg{width:52px;height:52px}
 .tile i{display:block;width:96px;height:8px;border-radius:4px;background:rgba(255,255,255,.28)}
-/* captions */
-#caps{position:absolute;left:0;width:1920px;bottom:70px;height:80px;font-size:64px}
-.chunk{position:absolute;left:0;right:0;top:0;text-align:center;font-weight:600;letter-spacing:-.025em;line-height:1.1;white-space:nowrap;opacity:0;text-shadow:0 4px 28px rgba(0,0,0,.6)}
-.cw{display:inline-block;margin:0 .13em;color:rgba(255,255,255,.55)}
 #vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 50%,transparent 62%,rgba(0,0,0,.35) 100%)}
 </style>
 </head>
@@ -93,7 +89,7 @@ html,body{width:1920px;height:1080px;overflow:hidden;background:#000}
   <div id="cring"></div>
   <div id="vframe"><div id="vclip"><div id="vz"><video id="av" class="clip" src="assets/aroll.mp4" playsinline data-has-audio="true" data-start="0" data-duration="@@D@@" data-track-index="0" data-volume="1"></video></div></div></div>
 
-  <section class="scene clip" id="L1" data-start="@@L1a@@" data-duration="@@L1d@@" data-track-index="2"><div class="lz">
+  <section class="scene clip" id="L1" data-start="@@L1a@@" data-duration="@@L1d@@" data-track-index="2"><div class="lz" style="left:540px">
     <div id="l1e"></div><div id="l1h" class="hero" style="font-size:470px;margin-top:6px"><span class="hc grn">$</span><span class="hc grn">0</span></div><div id="l1l"></div></div></section>
 
   <section class="scene clip" id="L2" data-start="@@L2a@@" data-duration="@@L2d@@" data-track-index="2"><div class="lz">
@@ -102,10 +98,10 @@ html,body{width:1920px;height:1080px;overflow:hidden;background:#000}
     <svg id="cur" viewBox="0 0 96 96"><path d="M18 10 L18 76 L34 62 L46 88 L58 82 L46 57 L68 57 Z" fill="#fff" stroke="#111" stroke-width="5" stroke-linejoin="round"/></svg></div></section>
 
   <section class="scene clip" id="L3" data-start="@@L3a@@" data-duration="@@L3d@@" data-track-index="2"><div class="lz">
-    <svg id="bdg" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="#30d158"/><path d="M13 25l8 8 15-17" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <svg id="bdg" style="width:120px;height:120px" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="#30d158"/><path d="M13 25l8 8 15-17" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
     <div id="l3t"></div></div></section>
 
-  <section class="scene clip" id="L4" data-start="@@L4a@@" data-duration="@@L4d@@" data-track-index="2"><div class="lz" style="justify-content:flex-start">
+  <section class="scene clip" id="L4" data-start="@@L4a@@" data-duration="@@L4d@@" data-track-index="2"><div class="lz" id="lz4" style="justify-content:flex-start">
     <div id="h4a"></div><div id="h4b" style="position:absolute;left:0;top:0"></div>
     <div id="card" class="glass" style="margin-top:0;position:absolute;left:0;top:250px">
       <div class="row" id="r1"><span>LLC formation</span><b class="ok">$0</b></div>
@@ -116,7 +112,7 @@ html,body{width:1920px;height:1080px;overflow:hidden;background:#000}
   <section class="scene clip" id="CH" data-start="@@CHa@@" data-duration="@@CHd@@" data-track-index="3">
     <div id="lane"><div id="c5a" class="chip glass"><span class="n">2</span>LLCs formed</div><div id="c5b" class="chip glass" style="padding-left:34px">Clicked through it myself</div></div></section>
 
-  <section class="scene clip" id="L6" data-start="@@L6a@@" data-duration="@@L6d@@" data-track-index="2"><div class="lz">
+  <section class="scene clip" id="L6" data-start="@@L6a@@" data-duration="@@L6d@@" data-track-index="2"><div class="lz" style="left:510px">
     <div id="h6"></div><div id="panel" class="glass"><div id="bars"></div><div id="tag0">$0</div><div id="tag200" class="org">$200 / yr</div></div></div></section>
 
   <section class="scene clip" id="L7" data-start="@@L7a@@" data-duration="@@L7d@@" data-track-index="2"><div class="lz">
@@ -126,11 +122,10 @@ html,body{width:1920px;height:1080px;overflow:hidden;background:#000}
     <div id="h8"></div>
     <div id="scl"><div id="grp" style="position:absolute;inset:0"><div id="beam"></div><div class="pan glass" id="pl" style="left:30px">Features</div><div class="pan glass" id="pr" style="right:30px;color:#ff9f0a">$216 / yr</div></div><div id="piv"></div></div></div></section>
 
-  <section class="scene clip" id="L9" data-start="@@L9a@@" data-duration="@@L9d@@" data-track-index="2"><div class="lz">
+  <section class="scene clip" id="L9" data-start="@@L9a@@" data-duration="@@L9d@@" data-track-index="2"><div class="lz" style="left:510px">
     <div id="h9"></div><div id="tiles"></div></div></section>
 
   <div id="shade"></div>
-  <div id="caps"></div>
   <div id="vig"></div>
 </div>
 <script>
@@ -147,7 +142,7 @@ function mk(sel,lines,t0){const host=document.querySelector(sel);const els=[];
   lines.forEach(L=>{const ln=document.createElement("div");ln.className="ln";ln.style.fontSize=L.size+"px";
     L.w.forEach(([txt,t])=>{const s=document.createElement("span");s.className="w "+(L.cls||"");s.textContent=txt;ln.appendChild(s);
       const st=Math.max(t0+.02,t-LEAD);
-      tl.fromTo(s,{yPercent:118,rotation:5,opacity:0},{yPercent:0,rotation:0,opacity:1,duration:.55,ease:SP},st);
+      tl.fromTo(s,{yPercent:118,opacity:0},{yPercent:0,opacity:1,duration:.55,ease:SP},st);
       els.push(s);});
     host.appendChild(ln);});
   return els;}
@@ -155,44 +150,29 @@ const outEls=(els,t,stag=.025)=>tl.to(els,{yPercent:-120,opacity:0,duration:.3,e
 const pop=(sel,t,from={})=>tl.fromTo(sel,{scale:.82,y:30,opacity:0,...from},{scale:1,y:0,opacity:1,duration:.55,ease:SP},t);
 const outBlock=(sel,t)=>tl.to(sel,{opacity:0,y:-30,scale:.97,duration:.28,ease:"power3.in"},t);
 
-/* split layout: A-roll becomes a rounded card on the right, graphics get the left */
+/* three layouts: full-frame presenter ("full"), full-screen animation ("fs"), both at once ("split") */
 const CARD="inset(90px 70px 90px 1130px round 48px)",FULL="inset(0px 0px 0px 0px round 0px)";
-function split(a,b){
-  tl.fromTo("#vframe",{clipPath:FULL},{clipPath:CARD,duration:.7,ease:sp(.7,.82,14),immediateRender:false},a);
-  tl.fromTo("#vclip",{x:0},{x:330,duration:.7,ease:sp(.7,.82,14),immediateRender:false},a);
-  tl.fromTo("#sbg",{opacity:0},{opacity:1,duration:.45,ease:"power2.out",immediateRender:false},a);
-  tl.fromTo("#cring",{opacity:0},{opacity:1,duration:.5,immediateRender:false},a+.1);
-  tl.fromTo("#shade",{opacity:1},{opacity:0,duration:.4,immediateRender:false},a);
-  tl.fromTo("#caps",{x:0,scale:1},{x:-395,scale:.78,duration:.6,ease:sp(.6,.85,14),immediateRender:false},a);
-  if(b){
-  tl.fromTo("#vframe",{clipPath:CARD},{clipPath:FULL,duration:.6,ease:sp(.6,.85,14),immediateRender:false},b);
-  tl.fromTo("#vclip",{x:330},{x:0,duration:.6,ease:sp(.6,.85,14),immediateRender:false},b);
-  tl.fromTo("#sbg",{opacity:1},{opacity:0,duration:.4,immediateRender:false},b+.2);
-  tl.fromTo("#cring",{opacity:1},{opacity:0,duration:.3,immediateRender:false},b);
-  tl.fromTo("#shade",{opacity:0},{opacity:1,duration:.4,immediateRender:false},b+.2);
-  tl.fromTo("#caps",{x:-395,scale:.78},{x:0,scale:1,duration:.5,ease:sp(.5,.85,14),immediateRender:false},b);}
-}
-split(M.s1[0],M.s1[1]);split(M.s2[0],null);
+const ST={full:{clip:FULL,x:0,y:0,vo:1,bg:0,ring:0,sh:1},split:{clip:CARD,x:330,y:90,vo:1,bg:1,ring:1,sh:0},fs:{clip:CARD,x:330,y:90,vo:0,bg:1,ring:0,sh:0}};
+const modeAt=t=>{let m="full";C.modes.forEach(([mm,tt])=>{if(t>=tt-1e-6)m=mm;});return m;};
+const segBase=t=>{let i=0;C.segs.forEach(([a],k)=>{if(t>=a-1e-3)i=k;});return i%2?1.12:1;};
+const vzS=(m,t)=>m==="full"?segBase(t):1;
+const SPM=sp(.8,.88,12);
+C.modes.forEach(([m,t],i)=>{if(!i)return;const p=C.modes[i-1][0],a=ST[p],b=ST[m];
+  tl.fromTo("#vframe",{clipPath:a.clip},{clipPath:b.clip,duration:.8,ease:SPM,immediateRender:false},t);
+  tl.fromTo("#vframe",{opacity:a.vo},{opacity:b.vo,duration:.45,ease:"power2.inOut",immediateRender:false},t);
+  tl.fromTo("#vclip",{x:a.x,y:a.y},{x:b.x,y:b.y,duration:.8,ease:SPM,immediateRender:false},t);
+  tl.fromTo("#vz",{scale:vzS(p,t)},{scale:vzS(m,t+.8),duration:.8,ease:SPM,immediateRender:false},t);
+  tl.fromTo("#sbg",{opacity:a.bg},{opacity:b.bg,duration:.45,ease:"power2.inOut",immediateRender:false},t);
+  tl.fromTo("#cring",{opacity:a.ring},{opacity:b.ring,duration:.45,immediateRender:false},t+.1);
+  tl.fromTo("#shade",{opacity:a.sh},{opacity:b.sh,duration:.45,immediateRender:false},t);});
+/* alternate punch-in on each cut while the presenter is full frame (hard switch hides the jump cut) */
+C.segs.forEach(([a],i)=>{if(!i)return;const near=C.modes.some(([m,tt],j)=>j&&tt<=a&&a<tt+.85);
+  if(!near&&modeAt(a)==="full")tl.set("#vz",{scale:segBase(a)},a);});
 
 /* ambient glow per beat (left zone only; behind the card) */
 const orbSets={L1:[1,1,0,0,0,0],L2:[0,0,0,0,1,1],L3:[0,0,0,0,1,1],L4:[0,0,1,1,0,0],L6:[0,0,1,1,0,0],L7:[0,0,0,0,1,1],L8:[1,1,0,0,0,0],L9:[1,1,0,0,0,0]};
 Object.keys(orbSets).forEach(id=>{const a=W[id][0];orbSets[id].forEach((v,i)=>tl.to(`.o${i+1}`,{opacity:v,duration:.5,ease:"power2.inOut"},a-.1));});
-tl.fromTo(".orb",{x:0,y:0},{x:90,y:50,duration:C.D,ease:"sine.inOut",immediateRender:false},0);
 
-/* A-roll punch-ins: alternate framing on every cut + slow push inside each shot */
-C.segs.forEach(([a,b],i)=>{const base=i%2?1.12:1.0;
-  tl.fromTo("#vz",{scale:base},{scale:base*1.03,duration:Math.max(.1,b-a),ease:"none",immediateRender:false},a);});
-
-/* captions: highlight lands ON the word, chunk rises just before */
-const caps=document.getElementById("caps");
-C.caps.forEach((c,i)=>{const el=document.createElement("div");el.className="chunk";
-  const spans=c.w.map(([txt,t,col])=>{const s=document.createElement("span");s.className="cw";s.textContent=txt;el.appendChild(s);return [s,t,col];});
-  caps.appendChild(el);
-  const nx=C.caps[i+1];const inT=Math.max(0,c.t0-.1);
-  tl.fromTo(el,{opacity:0,y:14},{opacity:1,y:0,duration:.22,ease:"power2.out"},inT);
-  spans.forEach(([s,t,col])=>tl.to(s,{color:col||"#ffffff",duration:.08,ease:"none"},t-.03));
-  const outT=nx?Math.max(inT+.3,nx.t0-.1):c.t1+.12;
-  tl.to(el,{opacity:0,duration:.06,ease:"none"},outT);});
 
 /* ---------- L1: $0 ---------- */
 {const[a,b]=W.L1,k=Kn.l1;
@@ -217,7 +197,7 @@ C.caps.forEach((c,i)=>{const el=document.createElement("div");el.className="chun
 /* ---------- L3: technically true ---------- */
 {const[a,b]=W.L3,k=Kn.l3;
  tl.fromTo("#bdg",{scale:0,rotation:-40,opacity:0},{scale:1,rotation:0,opacity:1,duration:.55,ease:SP},k.tech-LEAD);
- const t=mk("#l3t",[{size:132,cls:"wht",w:[["Technically",k.tech]]},{size:132,cls:"wht",w:[["true.",k.true]]}],a);
+ const t=mk("#l3t",[{size:100,cls:"wht",w:[["Technically",k.tech]]},{size:100,cls:"wht",w:[["true.",k.true]]}],a);
  tl.fromTo("#bdg",{scale:1},{scale:1.18,duration:.18,yoyo:true,repeat:1,ease:"power2.out",immediateRender:false},k.true-.05);
  outEls(t,b-.3);outBlock("#bdg",b-.3);}
 /* ---------- L4: checkout ---------- */
@@ -227,6 +207,7 @@ C.caps.forEach((c,i)=>{const el=document.createElement("div");el.className="chun
  [["#r1",k.rows[0]],["#r2",k.rows[1]],["#r3",k.rows[2]]].forEach(([r,t])=>tl.fromTo(r,{opacity:0,y:18},{opacity:1,y:0,duration:.45,ease:SP},t-LEAD));
  const o={v:0};tl.fromTo(o,{v:0},{v:216,duration:k.land-k.count,ease:"power3.out",onUpdate(){document.getElementById("totn").textContent="$"+Math.round(o.v);}},k.count);
  tl.fromTo("#totn",{scale:1},{scale:1.07,duration:.16,yoyo:true,repeat:1,ease:"power2.out",transformOrigin:"right center",immediateRender:false},k.land-.04);
+ tl.fromTo("#lz4",{x:420},{x:0,duration:.8,ease:SPM},k.swap-.2);
  outEls(h1,k.swap-.12);
  const h2=mk("#h4b",[{size:58,cls:"dim",w:[["and",k.n1[0]],["they",k.n1[1]],["have",k.n1[2]]]},{size:118,cls:"wht",w:[["no",k.n2[0]],["idea",k.n2[1]],["how.",k.n2[2]]]}],a);
  outEls(h2,b-.3);outBlock("#card",b-.3);}
